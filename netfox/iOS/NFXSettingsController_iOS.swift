@@ -308,6 +308,17 @@ class NFXSettingsController_iOS: NFXSettingsController, UITableViewDelegate, UIT
             }
             
             self.present(mailComposer, animated: true, completion: nil)
+        } else {  // Usually on Simulator
+            // Save data to file
+            let fileName = "session.log"
+            let DocumentDirURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+
+            let fileURL = DocumentDirURL.appendingPathComponent(fileName).appendingPathExtension("txt")
+            print("FilePath: \(fileURL.path)")
+
+            let writeString = NSData(contentsOfFile: NFXPath.SessionLog as String)
+            // Write to the file
+            writeString?.write(to: fileURL, atomically: true)
         }
     }
     
